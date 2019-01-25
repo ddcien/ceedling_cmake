@@ -105,7 +105,7 @@ function(generate_fixture_runner path prefix name)
         )
     add_executable(${name}
         ${srcs}
-        ${CMAKE_BINARY_DIR}/all_tests.c
+        ${CMAKE_BINARY_DIR}/${name}.c
         )
     target_link_libraries(${name} unity ${libs})
     add_test(${name} ${name} -v)
