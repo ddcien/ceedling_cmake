@@ -2,6 +2,8 @@ set(CMOCK_PATH ${CMAKE_CURRENT_LIST_DIR})
 set(UNITY_PATH ${CMOCK_PATH}/vendor/unity)
 set(CEXCEPTION_PATH ${CMOCK_PATH}/vendor/c_exception)
 
+include(CTest)
+
 add_library(c_exception
     ${CEXCEPTION_PATH}/lib/CException.c
     ${CEXCEPTION_PATH}/lib/CException.h
