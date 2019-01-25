@@ -1,0 +1,25 @@
+:cmock:
+  :attributes:
+    - __funky
+    - __intrinsic
+  :callback_after_arg_check: true
+  :callback_include_count: true
+  :cexception_include: nil
+  :enforce_strict_ordering: false
+  :framework: :unity
+  :mock_path: mocks
+  :mock_prefix: mock_
+  :mock_suffix: ""
+  :plugins:
+    - :ignore
+    - :ignore_arg
+    - :expect_any_args
+    - :cexception
+    - :callback
+    - :return_thru_ptr
+    - :array
+  :treat_externs: :include
+  :when_ptr: :smart
+  :verbosity: 3
+  :use_param_tests: true
+
