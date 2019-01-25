@@ -2,6 +2,13 @@ set(CMOCK_PATH ${CMAKE_CURRENT_LIST_DIR})
 set(UNITY_PATH ${CMOCK_PATH}/vendor/unity)
 set(CEXCEPTION_PATH ${CMOCK_PATH}/vendor/c_exception)
 
+add_library(c_exception
+    ${CEXCEPTION_PATH}/lib/CException.c
+    ${CEXCEPTION_PATH}/lib/CException.h
+    )
+target_include_directories(c_exception PUBLIC ${CEXCEPTION_PATH}/lib)
+
+
 add_library(unity
     ${UNITY_PATH}/src/unity.c
     ${UNITY_PATH}/src/unity.h
@@ -15,12 +22,8 @@ target_include_directories(unity PUBLIC
     ${UNITY_PATH}/src
     ${UNITY_PATH}/extras/fixture/src
     )
+target_link_libraries(unity c_exception)
 
-add_library(c_exception
-    ${CEXCEPTION_PATH}/lib/CException.c
-    ${CEXCEPTION_PATH}/lib/CException.h
-    )
-target_include_directories(unity PUBLIC ${CEXCEPTION_PATH}/lib)
 
 add_library(cmock
     ${CMOCK_PATH}/src/cmock.c
@@ -28,7 +31,7 @@ add_library(cmock
     ${CMOCK_PATH}/src/cmock_internals.h
     )
 target_include_directories(cmock PUBLIC ${CMOCK_PATH}/src)
-target_link_libraries(cmock unity c_exception)
+target_link_libraries(cmock unity)
 
 
 function(generate_mock src)
@@ -82,7 +85,7 @@ function(generate_test_runner src)
         ${src}
         ${runner_path}/${name}_runner.c
         )
-    target_link_libraries(${name} ${libs})
+    target_link_libraries(${name} unity ${libs})
     add_test(${name} ${name})
 endfunction()
 
@@ -102,7 +105,7 @@ function(generate_fixture_runner path prefix name)
         ${srcs}
         ${CMAKE_BINARY_DIR}/all_tests.c
         )
-    target_link_libraries(${name} ${libs})
+    target_link_libraries(${name} unity ${libs})
     add_test(${name} ${name} -v)
 endfunction()
 
