@@ -1,4 +1,5 @@
-set(CMOCK_PATH ${CMAKE_CURRENT_LIST_DIR})
+set(CEEDLING_PATH ${CMAKE_CURRENT_LIST_DIR})
+set(CMOCK_PATH ${CEEDLING_PATH}/cmock)
 set(UNITY_PATH ${CMOCK_PATH}/vendor/unity)
 set(CEXCEPTION_PATH ${CMOCK_PATH}/vendor/c_exception)
 
@@ -50,7 +51,7 @@ function(generate_mock src)
     get_filename_component(path ${src} DIRECTORY)
     add_custom_command(
         OUTPUT ${mock_path}/mock_${name}.c ${mock_path}/mock_${name}.h
-        COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb -o${CMOCK_PATH}/config.yml ${src}
+        COMMAND ruby ${CMOCK_PATH}/lib/cmock.rb -o${CEEDLING_PATH}/config.yml ${src}
         DEPENDS ${src}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         )
@@ -79,7 +80,7 @@ function(generate_test_runner src)
 
     add_custom_command(
         OUTPUT ${runner_path}/${name}_runner.c
-        COMMAND ruby ${UNITY_PATH}/auto/generate_test_runner.rb ${src} ${CMOCK_PATH}/config.yml ${runner_path}/${name}_runner.c
+        COMMAND ruby ${UNITY_PATH}/auto/generate_test_runner.rb ${src} ${CEEDLING_PATH}/config.yml ${runner_path}/${name}_runner.c
         DEPENDS ${src}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         )
@@ -99,7 +100,7 @@ function(generate_fixture_runner path prefix name)
 
     add_custom_command(
         OUTPUT ${CMAKE_BINARY_DIR}/${name}.c
-        COMMAND python3 ${CMOCK_PATH}/scripts/gen_fixture_runner.py -t ${path} -p ${prefix} -o ${CMAKE_BINARY_DIR}/${name}.c
+        COMMAND python3 ${CEEDLING_PATH}/scripts/gen_fixture_runner.py -t ${path} -p ${prefix} -o ${CMAKE_BINARY_DIR}/${name}.c
         DEPENDS ${srcs}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         )
