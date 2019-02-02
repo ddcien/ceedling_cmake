@@ -129,9 +129,9 @@ extern struct ddctest_suit const* const __TEST_SUIT_STOP();
         __auto_type const _suit = (suit);                                                                                                  \
         if (TEST_PROTECT()) {                                                                                                              \
             _suit->suit_setup();                                                                                                           \
-        }                                                                                                                                  \
-        for (struct ddctest_test const* const* test = _suit->start; test < _suit->stop; ++test) {                                          \
-            (*test)->runner(_suit);                                                                                                        \
+            for (struct ddctest_test const* const* test = _suit->start; test < _suit->stop; ++test) {                                      \
+                (*test)->runner(_suit);                                                                                                    \
+            }                                                                                                                              \
         }                                                                                                                                  \
         if (TEST_PROTECT()) {                                                                                                              \
             _suit->suit_teardown();                                                                                                        \
